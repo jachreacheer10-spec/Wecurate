@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeCurate - Clear to Teach, Fun to Reach (1AM Hub)</title>
+  
+  <!-- الخطوط الفاخرة المعتمدة: Outfit للإنجليزية و Alexandria للعربية -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #f8fafc 100%);
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --primary-color: #0284c7;
+      --primary-soft: #e0f2fe;
+      --btn-color: #2563eb;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --nav-bg: #ffffff;
+      --box-inner-bg: #f8fafc;
+      --radius-xl: 24px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      --success-color: #10b981;
+      --danger-color: #ef4444;
+    }
+
+    body.dark-mode {
+      --bg-gradient: linear-gradient(135deg, #090d16 0%, #0f172a 100%) !important;
+      --card-bg: #1e293b !important;
+      --card-border: #334155 !important;
+      --text-main: #f8fafc !important;
+      --text-muted: #94a3b8 !important;
+      --nav-bg: #1e293b !important;
+      --box-inner-bg: #0f172a !important;
+      --shadow: 0 15px 35px rgba(0, 0, 0, 0.35) !important;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 24px 24px;
+      color: var(--text-main);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Typography Polish */
+    .logo-text, .hub-title h1, .arena-question, .about-title, .celebration-title {
+      letter-spacing: -0.03em;
+    }
+
+    /* Preloader */
+    .preloader-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--card-bg);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    .preloader-overlay.hidden { opacity: 0; visibility: hidden; }
+    .preloader-ring {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid var(--primary-soft);
+      border-top-color: var(--primary-color);
+      animation: spinRing 0.85s linear infinite;
+    }
+    @keyframes spinRing { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .nav-icon {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* Top Navigation */
+    .top-nav {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .logo-badge {
+      width: 42px;
+      height: 42px;
+      background: var(--primary-color);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+    .logo-badge svg { width: 22px; height: 22px; }
+
+    .logo-text-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-text {
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--text-main);
+      line-height: 1.1;
+    }
+
+    .logo-slogan {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-pill {
+      background: var(--nav-bg);
+      border: 1.5px solid var(--card-border);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .nav-pill:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary-color);
+    }
+
+    .nav-pill.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .nav-pill.playing-music {
+      background: var(--primary-color);
+      color: white;
+      animation: pulseBtn 1.2s infinite alternate;
+    }
+    @keyframes pulseBtn { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
+
+    .star-pop { animation: starBounce 0.45s ease-out; }
+    @keyframes starBounce {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); color: #eab308; }
+      100% { transform: scale(1); }
+    }
+
+    /* Main Container */
+    .main-container {
+      background: var(--card-bg);
+      border-radius: var(--radius-xl);
+      padding: 28px 32px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex: 1;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .hub-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 1.5px solid var(--card-border);
+      padding-bottom: 18px;
+    }
+
+    .hub-title h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hub-title p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 280px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: var(--box-inner-bg);
+      border: 1.5px solid var(--card-border);
+      padding: 10px 16px 10px 42px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    .search-icon-wrapper {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      color: var(--text-muted);
+    }
+
+    /* Filters Bar */
+    .filters-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: var(--box-inner-bg);
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+    }
+
+    .filter-tab {
+      background: transparent;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .filter-tab:hover { color: var(--primary-color); }
+    .filter-tab.active {
+      background: var(--card-bg);
+      color: var(--primary-color);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    /* Cards Grid */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .word-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .word-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(2, 132, 199, 0.08);
+      border-color: var(--primary-color);
+    }
+
+    .card-banner {
+      position: relative;
+      width: 100%;
+      height: 145px;
+      background: #f1f5f9;
+      overflow: hidden;
+    }
+
+    .card-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .word-card:hover .card-banner img { transform: scale(1.05); }
+
+    .banner-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(6px);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .card-content {
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .term-wrapper { display: flex; align-items: baseline; gap: 8px; }
+    .term-text { font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
+    .term-pos {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      background: var(--primary-soft);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .audio-action-btn {
+      background: var(--primary-soft);
+      color: var(--primary-color);
+      border: none;
+      border-radius: 10px;
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .audio-action-btn:hover { background: var(--primary-color); color: white; }
+    .audio-action-btn.playing { background: #0284c7; color: white; animation: pulseBtn 1s infinite alternate; }
+
+    /* الترجمة العربية بخط Alexandria الفاخر */
+    .arabic-meaning {
+      font-family: 'Alexandria', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      direction: rtl;
+      text-align: right;
+      background: var(--box-inner-bg);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border-right: 4px solid var(--primary-color);
+    }
+
+    .example-box {
+      background: var(--box-inner-bg);
+      border: 1px solid var(--card-border);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: auto;
+    }
+
+    .example-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .example-text { font-size: 0.92rem; line-height: 1.55; color: var(--text-main); font-weight: 600; }
+
+    .play-sentence-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      transition: transform 0.15s ease;
+    }
+    .play-sentence-btn:hover { transform: scale(1.15); }
+
+    /* ==========================================
+       Learning Pathway (Quizzes Section)
+       ========================================== */
+    #pathwaySection {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sequence-selector-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .seq-pill {
+      background: var(--box-inner-bg);
+      border: 1.5px solid var(--card-border);
+      padding: 10px 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .seq-pill.active {
+      background: var(--primary-soft);
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .seq-pill.locked {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .pathway-hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      border-bottom: 1.5px solid var(--card-border);
+      padding-bottom: 18px;
+    }
+
+    .passing-mark-badge {
+      background: var(--primary-soft);
+      border: 1.5px solid var(--primary-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .station-card {
+      background: var(--box-inner-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .station-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary-color);
+      box-shadow: 0 8px 22px rgba(2, 132, 199, 0.1);
+    }
+
+    .station-top { display: flex; align-items: center; gap: 12px; }
+    .station-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .station-badge { font-size: 0.72rem; font-weight: 800; color: var(--primary-color); text-transform: uppercase; }
+    .station-name { font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-top: 2px; }
+
+    .station-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--card-border);
+      padding-top: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .passed-text { color: var(--success-color); display: flex; align-items: center; gap: 4px; }
+    .ready-text { color: var(--text-muted); }
+
+    /* Quiz Station Arena */
+    #stationArenaSection {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .arena-box {
+      background: var(--box-inner-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .arena-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .arena-task-pill {
+      background: var(--primary-soft);
+      border: 1px solid var(--primary-color);
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .arena-stats {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lives-indicator {
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+    }
+
+    .timer-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .arena-track {
+      width: 100%;
+      height: 6px;
+      background: var(--card-border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .arena-track-fill {
+      height: 100%;
+      width: 10%;
+      background: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    .arena-question {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .arena-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .arena-btn {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      padding: 16px 20px;
+      border-radius: 14px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .arena-btn:hover:not(:disabled) {
+      border-color: var(--primary-color);
+      background: var(--primary-soft);
+    }
+
+    .arena-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: var(--success-color) !important;
+      color: #065f46 !important;
+    }
+
+    .arena-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: var(--danger-color) !important;
+      color: #991b1b !important;
+    }
+
+    .radio-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .arena-btn.correct .radio-dot { border-color: var(--success-color); background: var(--success-color); color: white; }
+    .arena-btn.wrong .radio-dot { border-color: var(--danger-color); background: var(--danger-color); color: white; }
+
+    .arena-next-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: none;
+      width: 100%;
+      margin-top: 6px;
+      transition: all 0.2s ease;
+    }
+
+    /* ==========================================
+       About Us Section
+       ========================================== */
+    #aboutSection {
+      display: none;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .about-hero {
+      text-align: center;
+      padding: 20px 10px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .about-tagline {
+      background: var(--primary-soft);
+      color: var(--primary-color);
+      border: 1.5px solid var(--primary-color);
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .about-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .about-manifesto-card {
+      background: var(--box-inner-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: var(--radius-xl);
+      padding: 32px 36px;
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--text-main);
+      font-weight: 600;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      border-left: 6px solid var(--primary-color);
+    }
+
+    .about-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .pillar-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary-color);
+    }
+
+    .pillar-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .pillar-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .pillar-desc {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ==========================================
+       Celebration Modal
+       ========================================== */
+    .celebration-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .celebration-card {
+      background: var(--card-bg);
+      border: 2px solid var(--primary-color);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      animation: zoomUp 0.35s ease-out;
+    }
+
+    .celebration-icon {
+      font-size: 3.8rem;
+      line-height: 1;
+      animation: bounceTrophy 1.2s infinite alternate;
+    }
+
+    .celebration-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .celebration-station {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .celebration-score-box {
+      background: var(--box-inner-bg);
+      border: 1.5px solid var(--card-border);
+      padding: 12px 28px;
+      border-radius: 16px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .celebration-score-val {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      line-height: 1;
+    }
+
+    .celebration-score-max {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .celebration-badge-msg {
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 12px;
+      line-height: 1.45;
+    }
+
+    .celebration-badge-msg.passed {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .celebration-badge-msg.failed {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .celebration-actions {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .celebration-btn {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      min-width: 140px;
+    }
+
+    .celebration-btn.primary { background: var(--primary-color); color: white; }
+    .celebration-btn.secondary { background: var(--box-inner-bg); border: 1.5px solid var(--card-border); color: var(--text-main); }
+    .celebration-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes zoomUp { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes bounceTrophy { 0% { transform: translateY(0); } 100% { transform: translateY(-8px); } }
+
+    /* ==========================================
+       Footer & Social Media
+       ========================================== */
+    .app-footer {
+      margin-top: 32px;
+      padding: 24px 16px 12px;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--text-main);
+    }
+
+    .footer-slogan {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      font-style: italic;
+    }
+
+    .footer-social-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .social-link-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .social-link-btn:hover {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader" class="preloader-overlay">
+    <div class="preloader-content">
+      <div class="preloader-ring"></div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <header class="top-nav">
+    <div class="logo-area" onclick="showSection('words')">
+      <div class="logo-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+      </div>
+      <div class="logo-text-group">
+        <span class="logo-text">WeCurate</span>
+        <span class="logo-slogan">"Clear to Teach, Fun to Reach."</span>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <!-- 1. Word Bank -->
+      <button class="nav-pill active" id="btnNavWords" onclick="showSection('words')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        Word Bank
+      </button>
+
+      <!-- 2. Quizzes -->
+      <button class="nav-pill" id="btnNavQuiz" onclick="showSection('quiz')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+        Quizzes
+      </button>
+
+      <!-- 3. About Us -->
+      <button class="nav-pill" id="btnNavAbout" onclick="showSection('about')">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        About Us
+      </button>
+
+      <!-- 4. Toggle Images -->
+      <button class="nav-pill" id="toggleImagesBtn" onclick="toggleImagesDisplay()">
+        <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        <span id="toggleImagesLabel">Hide Images</span>
+      </button>
+
+      <!-- 5. Music -->
+      <button class="nav-pill" id="musicToggleBtn" onclick="toggleBackgroundMusic()">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+        <span id="musicBtnLabel">Music</span>
+      </button>
+
+      <!-- 6. Dark Mode -->
+      <button class="nav-pill" id="darkToggleBtn" onclick="toggleDarkMode()">
+        <span id="darkIconWrapper">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </span>
+      </button>
+
+      <!-- 7. Theme Selector -->
+      <button class="nav-pill" id="themeSelectorBtn" onclick="cycleThemeColor()">
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg>
+        <span id="themeNameLabel">Sky Blue</span>
+      </button>
+
+      <!-- 8. Stars -->
+      <button class="nav-pill star-pill" id="starPillBtn">
+        <svg class="nav-icon" style="color: #eab308; fill: #eab308;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span id="starCounter">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-container">
+
+    <!-- ====================================================
+         1. الواجهة الأساسية: بنك المفردات (Word Bank)
+         ==================================================== -->
+    <div id="wordBankSection">
+      <div class="hub-header">
+        <div class="hub-title">
+          <h1>
+            <svg class="nav-icon" style="width: 26px; height: 26px; color: var(--primary-color);" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Sequence 1: Vocabulary Bank
+          </h1>
+          <p>1AM Textbook vocabulary with toggleable visual flashcards, clear audios, and authentic examples.</p>
+        </div>
+
+        <div class="search-box">
+          <span class="search-icon-wrapper">
+            <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </span>
+          <input type="text" id="searchInput" placeholder="Search word or Arabic meaning..." oninput="filterWords()">
+        </div>
+      </div>
+
+      <!-- فئات التصنيف -->
+      <div class="filters-bar" style="margin-top: 16px; margin-bottom: 20px;">
+        <button class="filter-tab active" onclick="setCategory('all', this)">
+          <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          All Words (<span id="totalCount">0</span>)
+        </button>
+
+        <button class="filter-tab" onclick="setCategory('routine', this)">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+          Daily Routines
+        </button>
+
+        <button class="filter-tab" onclick="setCategory('hobbies', this)">
+          <svg class="nav-icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Hobbies & Leisure
+        </button>
+
+        <button class="filter-tab" onclick="setCategory('food', this)">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          Food & Drinks
+        </button>
+
+        <button class="filter-tab" onclick="setCategory('clothes_time', this)">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Time & Outfits
+        </button>
+      </div>
+
+      <div class="vocab-grid" id="vocabGrid"></div>
+    </div>
+
+    <!-- ====================================================
+         2. مسار الكويزات (Quizzes Pathway)
+         ==================================================== -->
+    <div id="pathwaySection">
+      <!-- شريط اختيار السلسلة -->
+      <div class="sequence-selector-bar">
+        <div class="seq-pill active">
+          <span>🌟</span> Sequence 1: Habits & Preferences (Active Beta)
+        </div>
+        <div class="seq-pill locked" title="Coming Soon">
+          <span>🔒</span> Sequence 2: School Life (Coming Soon)
+        </div>
+        <div class="seq-pill locked" title="Coming Soon">
+          <span>🔒</span> Sequence 3: Holidays & Trips (Coming Soon)
+        </div>
+      </div>
+
+      <div class="pathway-hero">
+        <div class="hub-title">
+          <h1>
+            <svg class="nav-icon" style="width: 26px; height: 26px; color: var(--primary-color);" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg>
+            Sequence 1: Learning Pathway (Section 1)
+          </h1>
+          <p>Pass each station with at least 10/20 to unlock the next station and master Sequence 1.</p>
+        </div>
+
+        <div class="passing-mark-badge">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Passing Mark: 10/20 to unlock next station
+        </div>
+      </div>
+
+      <!-- 8 Stations -->
+      <div class="stations-grid" style="margin-top: 10px;">
+        
+        <div class="station-card" onclick="openStation(1)">
+          <div class="station-top">
+            <div class="station-icon-box"><svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+            <div>
+              <div class="station-badge">LESSON 1</div>
+              <div class="station-name">GET READY</div>
+            </div>
+          </div>
+          <div class="station-bottom">
+            <span id="statText1" class="ready-text">Ready to Start</span>
+            <span style="color:var(--text-muted)">20 Qs</span>
+          </div>
+        </div>
+
+        <div class="station-card" onclick="openStation(2)">
+          <div class="station-top">
+            <div class="station-icon-box"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
+            <div>
+              <div class="station-badge">LESSON 2</div>
+              <div class="station-name">LISTEN AND INTERACT</div>
+            </div>
+          </div>
+          <div class="station-bottom">
+            <span id="statText2" class="ready-text">Ready to Start</span>
+            <span style="color:var(--text-muted)">20 Qs</span>
+          </div>
+        </div>
+
+        <div class="station-card" onclick="openStation(3)">
+          <div class="station-top">
+            <div class="station-icon-box"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div>
+              <div class="station-badge">LESSON 3</div>
+              <div class="station-name">LISTEN AND CONSIDER</div>
+            </div>
+          </div>
+          <div class="station-bottom">
+            <span id="statText3" class="ready-text">Ready to Start</span>
+            <span style="color:var(--text-muted)">20 Qs</span>
+          </div>
+        </div>
+
+        <div class="station-card" onclick="openStation(4)">
+          <div class="station-top">
+            <div class="station-icon-box"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+            <div>
+              <div class="station-badge">LESSON 4</div>
+              <div class="station-name">I PRACTICE (Grammar)</div>
+            </div>
+          </div>
+          <div class="station-bottom">
+            <span id="statText4" class="ready-text">Ready to Start</span>
+            <span style="color:var(--text-muted)">20 Qs</span>
+          </div>
+        </div>
+
+        <div class="station-card" onclick="openStation(5)">
+          <div class="station-top">
+            <div class="station-icon-box"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+            <div>
+              <div class="station-badge">LESSON 5</div>
+              <div class="station-name">READ AND INTERPRET</div>
+            </div>
+          </div>
+          <div class="station-bottom">
+            <span id="statText5" class="ready-text">Ready to Start</span>
+            <span style="color:var(--text-muted)">20 Qs</span>
+          </div>
+        </div>
+
+        <div class="station-card" onclick="openStation(6)">
+          <div class="station-top">
+            <div class="station-icon-box"><svg class="nav-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></div>
+            <div>
+              <div class="station-badge">LESSON 6</div>
+              <div class="station-name">I PRACTICE (Sounds)</div>
+            </div>
+          </div>
+          <div class="station-bottom">
+            <span id="statText6" class="ready-text">Ready to Start</span>
+            <span style="color:var(--text-muted)">20 Qs</span>
+          </div>
+        </div>
+
+        <div class="station-card" onclick="openStation(7)">
+          <div class="station-top">
+            <div class="station-icon-box"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div>
+              <div class="station-badge">LESSON 7</div>
+              <div class="station-name">WRITE TOGETHER</div>
+            </div>
+          </div>
+          <div class="station-bottom">
+            <span id="statText7" class="ready-text">Ready to Start</span>
+            <span style="color:var(--text-muted)">20 Qs</span>
+          </div>
+        </div>
+
+        <div class="station-card" onclick="openStation(8)">
+          <div class="station-top">
+            <div class="station-icon-box"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+            <div>
+              <div class="station-badge">LESSON 8</div>
+              <div class="station-name">WRITE ALONE</div>
+            </div>
+          </div>
+          <div class="station-bottom">
+            <span id="statText8" class="ready-text">Ready to Start</span>
+            <span style="color:var(--text-muted)">20 Qs</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3. Quiz Arena -->
+    <div id="stationArenaSection">
+      <div class="arena-box">
+        <div class="arena-header">
+          <div class="arena-task-pill">
+            <span id="arenaTaskName">TASK 1</span>
+            <span id="arenaQIndex">Q 1/20</span>
+          </div>
+
+          <div class="arena-stats">
+            <div class="lives-indicator" id="arenaLivesBox">❤️❤️❤️</div>
+            <div class="timer-pill">
+              <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span id="arenaTimer">20s</span>
+            </div>
+            <button class="nav-pill" onclick="exitToPathway()" style="padding: 5px 12px; font-size: 0.8rem;">
+              Back
+            </button>
+          </div>
+        </div>
+
+        <div class="arena-track">
+          <div class="arena-track-fill" id="arenaTrackFill"></div>
+        </div>
+
+        <h3 class="arena-question" id="arenaQuestionText">Question text</h3>
+
+        <div class="arena-options" id="arenaOptionsList"></div>
+
+        <button class="arena-next-btn" id="arenaNextBtn" onclick="nextArenaQuestion()">Next Question ➔</button>
+      </div>
+    </div>
+
+    <!-- ====================================================
+         4. قسم "من نحن" (About Us Section)
+         ==================================================== -->
+    <div id="aboutSection">
+      <div class="about-hero">
+        <span class="about-tagline">"Clear to Teach, Fun to Reach."</span>
+        <h1 class="about-title">About WeCurate</h1>
+      </div>
+
+      <div class="about-manifesto-card">
+        "At Wecurate, we bridge the gap between classroom challenges and modern learning. We are a youth-driven initiative redefining school curricula into engaging, simplified, and interactive journeys. By empowering teachers with seamless educational resources and inspiring students with playful learning experiences, we make education truly clear to teach, and fun to reach."
+      </div>
+
+      <div class="about-pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">🎯</div>
+          <h3 class="pillar-title">Learner-Centric Approach</h3>
+          <p class="pillar-desc">
+            We adapt textbook curricula from students' viewpoints, breaking down linguistic barriers with interactive flashcards, audio clips, and gamified challenges.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon">💡</div>
+          <h3 class="pillar-title">Empowering Teachers</h3>
+          <p class="pillar-desc">
+            Designed to save teachers' preparation time by offering comprehensive PDP/PPU sequence maps, instant self-grading quizzes, and interactive visual aids.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon">🚀</div>
+          <h3 class="pillar-title">Modern & Gamified</h3>
+          <p class="pillar-desc">
+            Equipping middle schools with modern digital tools, streak rewards, and responsive pathways tailored to the demands of contemporary education.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==========================================
+       Celebration Modal
+       ========================================== -->
+  <div id="celebrationModal" class="celebration-overlay" style="display:none;">
+    <div class="celebration-card">
+      <div class="celebration-icon" id="celebrationIcon">🏆</div>
+      <h2 class="celebration-title" id="celebrationTitle">Congratulations!</h2>
+      <p class="celebration-station" id="celebrationStation">Lesson 1: GET READY</p>
+      
+      <div class="celebration-score-box">
+        <span class="celebration-score-val" id="celebrationScoreVal">16</span>
+        <span class="celebration-score-max">/ 20</span>
+      </div>
+
+      <div class="celebration-badge-msg passed" id="celebrationMsg">
+        🎉 Excellent Work! Station Passed & Next Station Unlocked!
+      </div>
+
+      <div class="celebration-actions">
+        <button class="celebration-btn primary" id="celebrationNextBtn" onclick="onCelebrationContinue()">
+          Continue to Pathway ➔
+        </button>
+        <button class="celebration-btn secondary" onclick="onCelebrationRetry()">
+          🔄 Retake Station
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       Footer
+       ========================================== -->
+  <footer class="app-footer">
+    <div class="footer-brand">WeCurate</div>
+    <div class="footer-slogan">"Clear to Teach, Fun to Reach."</div>
+
+    <div class="footer-social-links">
+      <!-- Facebook -->
+      <a href="#" target="_blank" rel="noopener" class="social-link-btn" title="Facebook">
+        <svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+
+      <!-- Instagram -->
+      <a href="#" target="_blank" rel="noopener" class="social-link-btn" title="Instagram">
+        <svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+
+      <!-- LinkedIn -->
+      <a href="#" target="_blank" rel="noopener" class="social-link-btn" title="LinkedIn">
+        <svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-copy">© 2026 WeCurate. All rights reserved. Beta Version.</div>
+  </footer>
+
+  <script>
+    // ==========================================
+    // بنك مفردات Sequence 1
+    // ==========================================
+    const fullVocabData = [
+      { word: "Wake up", pos: "phrasal verb", cat: "routine", tag: "Routine", baseName: "wake up", ar: "يستيقظ من النوم", sentence: "I wake up very early in the morning to practise my dawn prayer.", audio: "audio/words/Wake up.mp3" },
+      { word: "Get up", pos: "phrasal verb", cat: "routine", tag: "Routine", baseName: "get up", ar: "ينهض من الفراش", sentence: "I get up quickly when my alarm rings at six thirty.", audio: "audio/words/Get up.mp3" },
+      { word: "Wash face", pos: "verb phrase", cat: "routine", tag: "Hygiene", baseName: "wash face", ar: "يغسل وجهه", sentence: "First, I wash my face and brush my teeth.", audio: "audio/words/Wash face.mp3" },
+      { word: "Brush teeth", pos: "verb phrase", cat: "routine", tag: "Hygiene", baseName: "brush teeth", ar: "يُنظّف أسنانه بالفرشاة", sentence: "I brush my teeth every morning and evening.", audio: "audio/words/Brush teeth.mp3" },
+      { word: "Pray the dawn prayer", pos: "verb phrase", cat: "routine", tag: "Prayer", baseName: "pray the dawn prayer", ar: "يؤدي صلاة الفجر", sentence: "Omar wakes up early to pray the Dawn prayer.", audio: "audio/words/Pray the dawn prayer.mp3" },
+      { word: "Get dressed", pos: "verb phrase", cat: "routine", tag: "Morning", baseName: "get dressed", ar: "يرتدي ملابسه", sentence: "I get dressed and put on my school apron.", audio: "audio/words/Get dressed.mp3" },
+      { word: "Have breakfast", pos: "verb phrase", cat: "routine", tag: "Meal", baseName: "have breakfast", ar: "يتناول فطور الصباح", sentence: "I have toast and milk for breakfast with my family.", audio: "audio/words/Have breakfast.mp3" },
+      { word: "Walk to school on foot", pos: "verb phrase", cat: "routine", tag: "School", baseName: "walk to school on foot", ar: "يذهب إلى المدرسة مشياً على الأقدام", sentence: "Razane and her friend walk to school on foot.", audio: "audio/words/Walk to school on foot.mp3" },
+      { word: "Study hard", pos: "verb phrase", cat: "routine", tag: "Learning", baseName: "study hard", ar: "يجتهد ويدرس بجد", sentence: "We study hard in class to get excellent marks.", audio: "audio/words/Study hard.mp3" },
+      { word: "Have lunch", pos: "verb phrase", cat: "routine", tag: "Meal", baseName: "have lunch", ar: "يتناول وجبة الغداء", sentence: "Pupils have lunch together in the school canteen at 12:30.", audio: "audio/words/Have lunch.mp3" },
+      { word: "Return home", pos: "verb phrase", cat: "routine", tag: "Afternoon", baseName: "return home", ar: "يعود إلى المنزل", sentence: "I return home at four o'clock in the afternoon.", audio: "audio/words/Return home.mp3" },
+      { word: "Go back home", pos: "verb phrase", cat: "routine", tag: "Afternoon", baseName: "go back home", ar: "يرجع إلى المنزل", sentence: "After school, I go back home with my twin sister.", audio: "audio/words/Go back home.mp3" },
+      { word: "Have a snack", pos: "verb phrase", cat: "routine", tag: "Snack", baseName: "have a snack", ar: "يتناول وجبة خفيفة (لمجة)", sentence: "Just after school, Amina and I have a healthy snack.", audio: "audio/words/Have a snack.mp3" },
+      { word: "Do homework", pos: "verb phrase", cat: "routine", tag: "Study", baseName: "do homework", ar: "يُنجز الواجبات المدرسية", sentence: "In the afternoon, I do my homework carefully.", audio: "audio/words/Do homework.mp3" },
+      { word: "Feed the cat", pos: "verb phrase", cat: "routine", tag: "Pet care", baseName: "feed the cat", ar: "يُطعم القطة", sentence: "My twin sister Amina feeds her cat every evening.", audio: "audio/words/Feed the cat.mp3" },
+      { word: "Set the table", pos: "verb phrase", cat: "routine", tag: "Helping", baseName: "set the table", ar: "يرتّب مائدة الطعام", sentence: "I help my mother and set the table for dinner.", audio: "audio/words/Set the table.mp3" },
+      { word: "Have dinner", pos: "verb phrase", cat: "routine", tag: "Meal", baseName: "have dinner", ar: "يتناول وجبة العشاء", sentence: "We all have dinner together as a happy family at 8:00.", audio: "audio/words/Have dinner.mp3" },
+      { word: "Tidy the house", pos: "verb phrase", cat: "routine", tag: "Housework", baseName: "tidy the house", ar: "يرتّب وينظّم المنزل", sentence: "My mother tidies the house and cleans the kitchen.", audio: "audio/words/Tidy the house.mp3" },
+      { word: "Put on pyjamas", pos: "verb phrase", cat: "routine", tag: "Night", baseName: "put on pyjamas", ar: "يرتدي ملابس النوم (البيجاما)", sentence: "Finally, we brush our teeth, put on our pyjamas and go to bed.", audio: "audio/words/Put on (pyjamas).mp3" },
+      { word: "Go to bed", pos: "verb phrase", cat: "routine", tag: "Sleep", baseName: "go to bed", ar: "يذهب إلى النوم والفراش", sentence: "I go to bed at around nine thirty to wake up active.", audio: "audio/words/Go to bed.mp3" },
+      { word: "Obligatory", pos: "adjective", cat: "routine", tag: "Rule", baseName: "obligatory", ar: "إجباري / إلزامي (واجب القيام به)", sentence: "Washing hands before meals is obligatory for all pupils.", audio: "audio/words/Obligatory.mp3" },
+      { word: "Pupil", pos: "noun", cat: "routine", tag: "Student", baseName: "pupil", ar: "تلميذ في المدرسة المتوسطة", sentence: "Ilyes is a new pupil at middle school.", audio: "audio/words/Pupil.mp3" },
+      { word: "Cycling", pos: "noun", cat: "hobbies", tag: "Sport", baseName: "cycling", ar: "ركوب الدراجة الهوائية", sentence: "Cycling in the park is Sami's favourite sport.", audio: "audio/words/Cycling.mp3" },
+      { word: "Riding a horse", pos: "noun phrase", cat: "hobbies", tag: "Sport", baseName: "riding a horse", ar: "ركوب الخيل (الفروسية)", sentence: "Omar enjoys riding a horse on the weekend.", audio: "audio/words/Riding a horse.mp3" },
+      { word: "Climbing", pos: "noun", cat: "hobbies", tag: "Adventure", baseName: "climbing", ar: "تسلّق المرتفعات والجبال", sentence: "Climbing mountains is an exciting outdoor adventure.", audio: "audio/words/Climbing.mp3" },
+      { word: "Surfing", pos: "noun", cat: "hobbies", tag: "Water Sport", baseName: "surfing", ar: "ركوب أمواج البحر", sentence: "Surfing in the summer is very refreshing.", audio: "audio/words/Surfing.mp3" },
+      { word: "Playing chess", pos: "verb phrase", cat: "hobbies", tag: "Strategy", baseName: "playing chess", ar: "لعب الشطرنج", sentence: "Playing chess teaches us patience and deep thinking.", audio: "audio/words/Playing chess.mp3" },
+      { word: "Playing board games", pos: "verb phrase", cat: "hobbies", tag: "Games", baseName: "playing board games", ar: "لعب ألعاب الطاولة", sentence: "On weekends, we enjoy playing board games at home.", audio: "audio/words/Playing board games.mp3" },
+      { word: "Mental games", pos: "noun phrase", cat: "hobbies", tag: "Brain", baseName: "mental games", ar: "ألعاب التفكير والذكاء", sentence: "Tinhinane likes solving mental games after school.", audio: "audio/words/Mental games.mp3" },
+      { word: "Collecting coins", pos: "noun phrase", cat: "hobbies", tag: "Collection", baseName: "collecting coins", ar: "جمع العملات النقدية القديمة", sentence: "Collecting coins from around the world is an inspiring hobby.", audio: "audio/words/Collecting coins.mp3" },
+      { word: "Gardening", pos: "noun", cat: "hobbies", tag: "Nature", baseName: "gardening", ar: "العناية بالحديقة وغرس النباتات", sentence: "Gardening keeps our courtyard green and blooming.", audio: "audio/words/Gardening.mp3" },
+      { word: "Knitting", pos: "noun", cat: "hobbies", tag: "Craft", baseName: "knitting", ar: "حياكة الصوف (التريكو)", sentence: "Amina's mother enjoys knitting warm clothes for winter.", audio: "audio/words/Knitting.mp3" },
+      { word: "Cooking", pos: "noun", cat: "hobbies", tag: "Culinary", baseName: "cooking", ar: "الطبخ وإعداد الوجبات", sentence: "Cooking traditional Algerian food is Grace's favourite activity.", audio: "audio/words/Cooking.mp3" },
+      { word: "Baking", pos: "noun", cat: "hobbies", tag: "Culinary", baseName: "baking", ar: "الخبز وإعداد الكعك والمعجنات", sentence: "I adore baking chocolate cakes on Friday.", audio: "audio/words/Baking.mp3" },
+      { word: "Acting", pos: "noun", cat: "hobbies", tag: "Drama", baseName: "acting", ar: "التمثيل والمسرح المدرسي", sentence: "Omar joins the theatre club because he loves acting.", audio: "audio/words/Acting.mp3" },
+      { word: "Reading books", pos: "verb phrase", cat: "hobbies", tag: "Reading", baseName: "reading books", ar: "مطالعة وقراءة الكتب", sentence: "Reading books before sleeping improves our English vocabulary.", audio: "audio/words/Reading books.mp3" },
+      { word: "Writing in a diary", pos: "verb phrase", cat: "hobbies", tag: "Writing", baseName: "writing in a diary", ar: "تدوين اليوميات والمذكرات", sentence: "Emma writes about her school routine in her personal diary.", audio: "audio/words/Writing in a diary.mp3" },
+      { word: "Drawing", pos: "noun", cat: "hobbies", tag: "Art", baseName: "drawing", ar: "الرسم التخطيطي بالقلم", sentence: "Wafa is talented at drawing comic characters.", audio: "audio/words/Drawing.mp3" },
+      { word: "Painting", pos: "noun", cat: "hobbies", tag: "Art", baseName: "painting", ar: "الرسم والتلوين بالصباغة", sentence: "Sophie enjoys painting colorful nature landscapes.", audio: "audio/words/Painting.mp3" },
+      { word: "Watching cartoons", pos: "verb phrase", cat: "hobbies", tag: "Animation", baseName: "watching cartoons", ar: "مشاهدة الرسوم المتحركة", sentence: "We dislike horror movies; we like watching cartoons.", audio: "audio/words/Watching cartoons.mp3" },
+      { word: "Watching movies", pos: "verb phrase", cat: "hobbies", tag: "Cinema", baseName: "watching movies", ar: "مشاهدة الأفلام", sentence: "I adore watching educational movies on weekends.", audio: "audio/words/Watching movies.mp3" },
+      { word: "Martial arts", pos: "noun phrase", cat: "hobbies", tag: "Sport", baseName: "martial arts", ar: "الفنون القتالية والدفاع عن النفس", sentence: "Practising martial arts builds discipline and physical power.", audio: "audio/words/Martial arts.mp3" },
+      { word: "Volunteering", pos: "noun", cat: "hobbies", tag: "Charity", baseName: "volunteering", ar: "العمل التطوعي ومساعدة الغير", sentence: "Volunteering to clean our neighborhood is a proud action.", audio: "audio/words/Volunteering.mp3" },
+      { word: "Indoor games", pos: "noun phrase", cat: "hobbies", tag: "Games", baseName: "indoor games", ar: "ألعاب داخل البيت", sentence: "When it rains outside, pupils prefer playing indoor games.", audio: "audio/words/Indoor games.mp3" },
+      { word: "Outdoor games", pos: "noun phrase", cat: "hobbies", tag: "Outdoor", baseName: "outdoor games", ar: "ألعاب في الهواء الطلق", sentence: "Khaled loves playing outdoor games in the stadium.", audio: "audio/words/Outdoor games.mp3" },
+      { word: "Food categories", pos: "noun phrase", cat: "food", tag: "Nutrition", baseName: "food categories", ar: "أصناف ومجموعات الأغذية", sentence: "In English class, we classify healthy food categories.", audio: "audio/words/Food Categories.mp3" },
+      { word: "Healthy food", pos: "noun phrase", cat: "food", tag: "Nutrition", baseName: "healthy food", ar: "طعام صحي ومفيد للجسم", sentence: "Fresh apples, vegetables, and milk are healthy food.", audio: "audio/words/Healthy food.mp3" },
+      { word: "Fast food", pos: "noun", cat: "food", tag: "Fast food", baseName: "fast food", ar: "الوجبات السريعة (برغر وبطاطا)", sentence: "Eating too much fast food is not good for pupils.", audio: "audio/words/Fast food.mp3" },
+      { word: "Street food", pos: "noun", cat: "food", tag: "Street food", baseName: "street food", ar: "أطعمة الشارع الجاهزة", sentence: "You can find appetizing street food in traditional markets.", audio: "audio/words/Street food.mp3" },
+      { word: "Couscous", pos: "noun", cat: "food", tag: "Traditional", baseName: "couscous", ar: "الكسكس (طبق جزائري تقليدي)", sentence: "Anes loves eating couscous on Friday with his family.", audio: "audio/words/Couscous.mp3" },
+      { word: "Grilled fish", pos: "noun phrase", cat: "food", tag: "Seafood", baseName: "grilled fish", ar: "سمك مشوي", sentence: "In Annaba, people prefer tasting fresh grilled fish.", audio: "audio/words/Grilled fish.mp3" },
+      { word: "Seafood", pos: "noun", cat: "food", tag: "Seafood", baseName: "seafood", ar: "المأكولات البحرية", sentence: "Coastal towns are famous for delicious seafood dishes.", audio: "audio/words/Seafood.mp3" },
+      { word: "Cereal", pos: "noun", cat: "food", tag: "Breakfast", baseName: "cereal", ar: "رقائق الحبوب (كورن فليكس)", sentence: "Emma eats cereal with milk before going to school.", audio: "audio/words/Cereal.mp3" },
+      { word: "Coffee", pos: "noun", cat: "food", tag: "Drink", baseName: "coffee", ar: "القهوة", sentence: "Dad prefers drinking coffee in the morning.", audio: "audio/words/Coffee.mp3" },
+      { word: "Tea", pos: "noun", cat: "food", tag: "Drink", baseName: "tea", ar: "الشاي", sentence: "We love having hot mint tea in the evening.", audio: "audio/words/Tea.mp3" },
+      { word: "Time & clocks", pos: "noun phrase", cat: "clothes_time", tag: "Time", baseName: "time and clocks", ar: "الوقت وأنواع الساعات", sentence: "Pupils learn how to tell the time and read different clocks.", audio: "audio/words/Time & Clocks.mp3" },
+      { word: "Wristwatch", pos: "noun", cat: "clothes_time", tag: "Accessories", baseName: "wristwatch", ar: "ساعة اليد", sentence: "Omar looks at his wristwatch to arrive on time.", audio: "audio/words/Wristwatch.mp3" },
+      { word: "Analog clock", pos: "noun phrase", cat: "clothes_time", tag: "Clock", baseName: "analog clock", ar: "ساعة عقارب تقليدية", sentence: "An analog clock has moving hands to show hours and minutes.", audio: "audio/words/Analog clock.mp3" },
+      { word: "Digital clock", pos: "noun phrase", cat: "clothes_time", tag: "Clock", baseName: "digital clock", ar: "ساعة رقمية إلكترونية", sentence: "A digital clock displays numbers clearly on the screen.", audio: "audio/words/Digital clock.mp3" },
+      { word: "Clothes styles", pos: "noun phrase", cat: "clothes_time", tag: "Fashion", baseName: "clothes styles", ar: "أنماط وأزياء اللباس", sentence: "We learn to describe different clothes styles in English.", audio: "audio/words/Clothes Styles.mp3" },
+      { word: "Casual clothes", pos: "noun phrase", cat: "clothes_time", tag: "Casual", baseName: "casual clothes", ar: "ملابس يومية مريحة (جينز وتيشيرت)", sentence: "Sophie likes wearing pink casual clothes at home.", audio: "audio/words/Casual clothes.mp3" },
+      { word: "Formal clothes", pos: "noun phrase", cat: "clothes_time", tag: "Formal", baseName: "formal clothes", ar: "ملابس رسمية وأنيقة", sentence: "People wear formal clothes for celebrations and ceremonies.", audio: "audio/words/Formal clothes.mp3" },
+      { word: "Sportswear", pos: "noun", cat: "clothes_time", tag: "Sport", baseName: "sportswear", ar: "ملابس رياضية", sentence: "Max chooses to wear sportswear for football practice.", audio: "audio/words/Sportswear.mp3" },
+      { word: "Traditional clothes", pos: "noun phrase", cat: "clothes_time", tag: "Culture", baseName: "traditional clothes", ar: "ملابس وأزياء تقليدية تراثية", sentence: "On Yennayer and Eid, we wear proud Algerian traditional clothes.", audio: "audio/words/Traditional clothes.mp3" },
+      { word: "Modern outfits", pos: "noun phrase", cat: "clothes_time", tag: "Modern", baseName: "modern outfits", ar: "أزياء وملابس عصرية حديثة", sentence: "Amina enjoys trying on simple modern outfits.", audio: "audio/words/Modern outfits.mp3" }
+    ];
+
+    // ==========================================
+    // بنك أسئلة المحطات الثمانية (20 سؤالاً لكل محطة)
+    // ==========================================
+    const lessonQuestionBanks = {
+      // 1. GET READY
+      1: [
+        { q: "Brushing teeth and washing hands are regular daily habits.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Playing the guitar is an obligatory daily routine for all pupils.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "Doing homework is an afternoon school habit.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Going to bed late is a healthy routine.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "Eating breakfast gives energy for school.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Skipping prayer is a good habit for pupils.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "Which phrasal verb means 'to stop sleeping'?", type: "mcq", opts: ["Wake up", "Have dinner", "Go to bed", "Tidy"], ans: 0 },
+        { q: "What do you do when your alarm rings at 6:30?", type: "mcq", opts: ["Get up", "Sleep more", "Watch TV", "Drive"], ans: 0 },
+        { q: "What do children do with their family in the evening?", type: "mcq", opts: ["Have dinner together", "Play in street", "Go to school", "Swim"], ans: 0 },
+        { q: "A planned list of daily activities and times is called a:", type: "mcq", opts: ["Daily schedule", "Sportswear", "Wristwatch", "Fast food"], ans: 0 },
+        { q: "Playing chess and solving puzzles are called:", type: "mcq", opts: ["Free-time activities", "Obligatory chores", "School subjects", "Meals"], ans: 0 },
+        { q: "Something you do regularly every day is called a:", type: "mcq", opts: ["Habit", "Holiday", "Trip", "Story"], ans: 0 },
+        { q: "Something you like more than another thing is your:", type: "mcq", opts: ["Preference", "Obligation", "Chore", "Alarm"], ans: 0 },
+        { q: "Which of these is a healthy morning habit?", type: "mcq", opts: ["Brushing teeth", "Eating chips", "Waking up at noon", "Shouting"], ans: 0 },
+        { q: "What is the synonym (=) of 'like most'?", type: "mcq", opts: ["prefer", "skip", "walk", "study"], ans: 0 },
+        { q: "What is the synonym (=) of 'regular / typical'?", type: "mcq", opts: ["daily", "late", "rare", "slow"], ans: 0 },
+        { q: "What is the opposite (≠) of 'early'?", type: "mcq", opts: ["late", "daily", "before", "clean"], ans: 0 },
+        { q: "What is the opposite (≠) of 'after'?", type: "mcq", opts: ["before", "morning", "night", "last"], ans: 0 },
+        { q: "What is the opposite (≠) of 'healthy'?", type: "mcq", opts: ["unhealthy", "clean", "active", "good"], ans: 0 },
+        { q: "What is the synonym (=) of 'leisure'?", type: "mcq", opts: ["free time", "hard work", "school", "exam"], ans: 0 }
+      ],
+
+      // 2. LISTEN AND INTERACT
+      2: [
+        { q: "Ilyes wakes up very late in the morning.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "Amina feeds her cat before going to school.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Ilyes and Amina go to school by bus.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "They have lunch in the school canteen at 12:30.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Ilyes prays the dawn prayer every morning.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Amina hates her small cat.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "How old is Ilyes? (Script 1)", type: "mcq", opts: ["11 years old", "13 years old", "9 years old", "15 years old"], ans: 0 },
+        { q: "Where is Ilyes from?", type: "mcq", opts: ["Algiers", "Oran", "Annaba", "London"], ans: 0 },
+        { q: "Why does Ilyes wake up very early?", type: "mcq", opts: ["To practise dawn prayer", "To watch movies", "To play games", "To clean"], ans: 0 },
+        { q: "What does Ilyes have for breakfast?", type: "mcq", opts: ["Toast and milk", "Couscous", "Pizza", "Tea only"], ans: 0 },
+        { q: "How do Ilyes and his sister go to school?", type: "mcq", opts: ["On foot / walk", "By taxi", "By metro", "By bus"], ans: 0 },
+        { q: "Where do pupils eat lunch at 12:30?", type: "mcq", opts: ["School canteen", "Restaurant", "At home", "In park"], ans: 0 },
+        { q: "Who feeds the cat every morning?", type: "mcq", opts: ["Amina", "Ilyes", "The father", "The teacher"], ans: 0 },
+        { q: "What does Ilyes put on before leaving home?", type: "mcq", opts: ["School apron", "Pyjamas", "Swimsuit", "Football boots"], ans: 0 },
+        { q: "What is the synonym (=) of 'perform' in Script 1?", type: "mcq", opts: ["practise", "sleep", "return", "drive"], ans: 0 },
+        { q: "What is the synonym (=) of 'eat lunch'?", type: "mcq", opts: ["have lunch", "buy lunch", "cook lunch", "skip lunch"], ans: 0 },
+        { q: "What is the opposite (≠) of 'last'?", type: "mcq", opts: ["first", "late", "before", "early"], ans: 0 },
+        { q: "What is the opposite (≠) of 'early'?", type: "mcq", opts: ["late", "fast", "soon", "morning"], ans: 0 },
+        { q: "How do you read 12:30?", type: "mcq", opts: ["Half past twelve", "A quarter to one", "Twelve o'clock", "Ten past twelve"], ans: 0 },
+        { q: "What does 'twin sister' mean?", type: "mcq", opts: ["Sister born on same day", "Older cousin", "Friend at school", "Teacher"], ans: 0 }
+      ],
+
+      // 3. LISTEN AND CONSIDER
+      3: [
+        { q: "Tinhinane returns home by bus.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "Her dad drives her home and then goes shopping.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Tinhinane plays in the garden at 5:30.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "The family has dinner together at 8:00.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Mom washes dishes and tidies the house.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Tinhinane does homework after dinner.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "Where does Tinhinane come from?", type: "mcq", opts: ["Tizi Ouzou", "Algiers", "Tlemcen", "London"], ans: 0 },
+        { q: "How does Tinhinane return home from school?", type: "mcq", opts: ["Her dad drives her by car", "By bus", "On foot", "By train"], ans: 0 },
+        { q: "What does her dad do after driving her home?", type: "mcq", opts: ["He goes shopping", "He sleeps", "He plays chess", "He cooks"], ans: 0 },
+        { q: "Where does Tinhinane play at about 5:30?", type: "mcq", opts: ["In her room", "In the stadium", "At school", "In kitchen"], ans: 0 },
+        { q: "What kind of games does Tinhinane play?", type: "mcq", opts: ["Mental games and puzzles", "Violin", "Football", "Video games"], ans: 0 },
+        { q: "Who cleans the dishes after dinner?", type: "mcq", opts: ["Her mom", "Her dad", "Tinhinane", "Her brother"], ans: 0 },
+        { q: "What time does the family gather for dinner?", type: "mcq", opts: ["At 8:00 in evening", "At 5:00", "At 12:30", "At midnight"], ans: 0 },
+        { q: "What does Tinhinane watch after doing homework?", type: "mcq", opts: ["Television (TV)", "Movies in cinema", "YouTube on phone", "Nothing"], ans: 0 },
+        { q: "What is the synonym (=) of 'comes back'?", type: "mcq", opts: ["returns", "drives", "washes", "eats"], ans: 0 },
+        { q: "What is the synonym (=) of 'cleans / arranges'?", type: "mcq", opts: ["tidies", "breaks", "cooks", "buys"], ans: 0 },
+        { q: "What is the opposite (≠) of 'dirty'?", type: "mcq", opts: ["clean", "late", "after", "tidy"], ans: 0 },
+        { q: "What is the opposite (≠) of 'before'?", type: "mcq", opts: ["after", "now", "first", "early"], ans: 0 },
+        { q: "Which verb completes: 'Dad _________ me home.'", type: "mcq", opts: ["drives", "walks", "flies", "swims"], ans: 0 },
+        { q: "House chores include:", type: "mcq", opts: ["Washing dishes & tidying", "Playing chess", "Sleeping", "Watching TV"], ans: 0 }
+      ],
+
+      // 4. I PRACTICE (Grammar)
+      4: [
+        { q: "He _________ (to run) every morning.", type: "mcq", opts: ["runs", "runes", "running", "run"], ans: 0 },
+        { q: "She _________ (to wash) her face.", type: "mcq", opts: ["washes", "washs", "washing", "wash"], ans: 0 },
+        { q: "Malek _________ (to study) hard.", type: "mcq", opts: ["studies", "studys", "study", "studying"], ans: 0 },
+        { q: "My brother _________ not play video games at night.", type: "mcq", opts: ["does", "do", "is", "are"], ans: 0 },
+        { q: "_________ your dad drive you home after school?", type: "mcq", opts: ["Does", "Do", "Is", "Are"], ans: 0 },
+        { q: "Amina _________ (to wake) up early every day.", type: "mcq", opts: ["wakes", "wake", "waking", "waked"], ans: 0 },
+        { q: "Pupils _________ (to study) English hard in class.", type: "mcq", opts: ["study", "studies", "studying", "is study"], ans: 0 },
+        { q: "Dad _________ not return home by bus.", type: "mcq", opts: ["does", "do", "are", "have"], ans: 0 },
+        { q: "They _________ (to eat) dinner together at 8:00.", type: "mcq", opts: ["eat", "eats", "eating", "eaten"], ans: 0 },
+        { q: "Omar _________ (to fix) his watch on Friday.", type: "mcq", opts: ["fixes", "fixs", "fixing", "fix"], ans: 0 },
+        { q: "I _________ (to brush) my teeth twice a day.", type: "mcq", opts: ["brush", "brushes", "brushing", "brushed"], ans: 0 },
+        { q: "We _________ (not / to walk) to school in the rain.", type: "mcq", opts: ["do not walk", "does not walk", "not walk", "are not walk"], ans: 0 },
+        { q: "_________ you have breakfast with your family?", type: "mcq", opts: ["Do", "Does", "Is", "Are"], ans: 0 },
+        { q: "She _________ (to go) to bed at 9:30.", type: "mcq", opts: ["goes", "gos", "going", "go"], ans: 0 },
+        { q: "My sister _________ (to tidy) her bedroom.", type: "mcq", opts: ["tidies", "tidys", "tidy", "tidying"], ans: 0 },
+        { q: "He _________ (to watch) cartoons on weekends.", type: "mcq", opts: ["watches", "watchs", "watch", "watching"], ans: 0 },
+        { q: "_________ Tinhinane play chess after school?", type: "mcq", opts: ["Does", "Do", "Is", "Has"], ans: 0 },
+        { q: "Cats _________ (to drink) fresh milk.", type: "mcq", opts: ["drink", "drinks", "drinking", "drank"], ans: 0 },
+        { q: "Mother _________ (to prepare) tasty meals.", type: "mcq", opts: ["prepares", "prepare", "preparing", "prepared"], ans: 0 },
+        { q: "I _________ not like horror movies.", type: "mcq", opts: ["do", "does", "am", "is"], ans: 0 }
+      ],
+
+      // 5. READ AND INTERPRET
+      5: [
+        { q: "Emma lives in Algiers.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "Emma eats cereal at 7:00 every day.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Emma goes home to have lunch with her family.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "Emma writes in her diary before going to bed.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Emma attends a music class after school.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Emma can skip her evening diary habit.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "Which city is Emma from?", type: "mcq", opts: ["London", "Paris", "Algiers", "Annaba"], ans: 0 },
+        { q: "What time does Emma wake up every morning?", type: "mcq", opts: ["At 7:00", "At 6:00", "At 8:30", "At 12:00"], ans: 0 },
+        { q: "What does Emma eat for breakfast?", type: "mcq", opts: ["Cereal with milk", "Fish", "Couscous", "Pizza"], ans: 0 },
+        { q: "What does Emma share with her friends at lunch?", type: "mcq", opts: ["Sandwiches", "Apples", "Burgers", "Juice"], ans: 0 },
+        { q: "What does Emma do after school?", type: "mcq", opts: ["Attends music class or does homework", "Cleans kitchen", "Sleeps", "Watches cinema"], ans: 0 },
+        { q: "What time does Emma have dinner with her family?", type: "mcq", opts: ["At 9:00", "At 6:30", "At 12:00", "At dawn"], ans: 0 },
+        { q: "What does Emma do just before sleeping?", type: "mcq", opts: ["Brushes teeth and writes in diary", "Plays football", "Bakes cake", "Goes shopping"], ans: 0 },
+        { q: "What does 'I can't skip this habit' mean?", type: "mcq", opts: ["I must always do it", "I hate doing it", "I do it once a year", "It is bad"], ans: 0 },
+        { q: "What is the synonym (=) of 'get up' in Emma's text?", type: "mcq", opts: ["wake up", "sleep", "eat", "write"], ans: 0 },
+        { q: "What is the synonym (=) of 'take class / be present'?", type: "mcq", opts: ["attend", "skip", "walk", "share"], ans: 0 },
+        { q: "What is the opposite (≠) of 'before'?", type: "mcq", opts: ["after", "now", "early", "late"], ans: 0 },
+        { q: "What is the opposite (≠) of 'night'?", type: "mcq", opts: ["morning / day", "dark", "evening", "midnight"], ans: 0 },
+        { q: "A private journal where secrets and routines are written is a:", type: "mcq", opts: ["diary", "dairy", "dictionary", "canteen"], ans: 0 },
+        { q: "Emma's routine is an example of a:", type: "mcq", opts: ["Healthy schoolgirl routine", "Holiday trip", "Sports match", "Shopping list"], ans: 0 }
+      ],
+
+      // 6. I PRACTICE (Sounds)
+      6: [
+        { q: "Which sound does '-s' make in 'puts'?", type: "mcq", opts: ["/s/", "/z/", "/ɪz/"], ans: 0 },
+        { q: "Which sound does '-s' make in 'runs'?", type: "mcq", opts: ["/z/", "/s/", "/ɪz/"], ans: 0 },
+        { q: "Which sound does '-es' make in 'washes'?", type: "mcq", opts: ["/ɪz/", "/s/", "/z/"], ans: 0 },
+        { q: "Which sound does '-es' make in 'fixes'?", type: "mcq", opts: ["/ɪz/", "/s/", "/z/"], ans: 0 },
+        { q: "Which sound does '-s' make in 'bakes'?", type: "mcq", opts: ["/s/", "/z/", "/ɪz/"], ans: 0 },
+        { q: "Which sound does '-s' make in 'stops'?", type: "mcq", opts: ["/s/", "/z/", "/ɪz/"], ans: 0 },
+        { q: "Which sound does '-s' make in 'plays'?", type: "mcq", opts: ["/z/", "/s/", "/ɪz/"], ans: 0 },
+        { q: "Which sound does '-es' make in 'watches'?", type: "mcq", opts: ["/ɪz/", "/s/", "/z/"], ans: 0 },
+        { q: "Which sound does '-s' make in 'reads'?", type: "mcq", opts: ["/z/", "/s/", "/ɪz/"], ans: 0 },
+        { q: "Which sound does '-es' make in 'brushes'?", type: "mcq", opts: ["/ɪz/", "/s/", "/z/"], ans: 0 },
+        { q: "Which sound does '-s' make in 'eats'?", type: "mcq", opts: ["/s/", "/z/", "/ɪz/"], ans: 0 },
+        { q: "Which sound does '-s' make in 'cleans'?", type: "mcq", opts: ["/z/", "/s/", "/ɪz/"], ans: 0 },
+        { q: "Which sound does '-es' make in 'teaches'?", type: "mcq", opts: ["/ɪz/", "/s/", "/z/"], ans: 0 },
+        { q: "Which sound does '-s' make in 'drives'?", type: "mcq", opts: ["/z/", "/s/", "/ɪz/"], ans: 0 },
+        { q: "Which sound does '-s' make in 'helps'?", type: "mcq", opts: ["/s/", "/z/", "/ɪz/"], ans: 0 },
+        { q: "Odd-one-out vowel sound: [ play — late — make — cat ]", type: "mcq", opts: ["cat", "play", "late", "make"], ans: 0 },
+        { q: "Odd-one-out vowel sound: [ write — time — night — milk ]", type: "mcq", opts: ["milk", "write", "time", "night"], ans: 0 },
+        { q: "Odd-one-out vowel sound: [ eat — clean — sleep — bed ]", type: "mcq", opts: ["bed", "eat", "clean", "sleep"], ans: 0 },
+        { q: "Odd-one-out vowel sound: [ room — school — do — book ]", type: "mcq", opts: ["book", "room", "school", "do"], ans: 0 },
+        { q: "Odd-one-out vowel sound: [ run — up — sun — put ]", type: "mcq", opts: ["put", "run", "up", "sun"], ans: 0 }
+      ],
+
+      // 7. WRITE TOGETHER
+      7: [
+        { q: "Mom wakes up early at 6:00 in the morning.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Mom hates drinking coffee for breakfast.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "In the afternoon, mom goes shopping.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Mom reads pages of her book before sleeping.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Mom goes to bed at 2:00 in the morning.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "Mom does house chores like cleaning and preparing meals.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "What time does mom wake up? (Amina's Post)", type: "mcq", opts: ["At 6:00", "At 10:00", "At 12:00", "At 8:00"], ans: 0 },
+        { q: "What does mom like drinking for breakfast?", type: "mcq", opts: ["Coffee", "Tea", "Orange juice", "Soda"], ans: 0 },
+        { q: "What chores does mom perform every morning?", type: "mcq", opts: ["Cleans house & prepares meals", "Plays tennis", "Fixes car", "Drives bus"], ans: 0 },
+        { q: "What does mom like doing while eating?", type: "mcq", opts: ["Watching TV", "Running", "Writing emails", "Sleeping"], ans: 0 },
+        { q: "Where does mom go in the afternoon?", type: "mcq", opts: ["Goes shopping", "Goes to school", "Goes climbing", "Goes camping"], ans: 0 },
+        { q: "What does mom read before sleeping?", type: "mcq", opts: ["Pages of her book", "School book", "Dictionary", "Newspaper"], ans: 0 },
+        { q: "What time does mom go to bed?", type: "mcq", opts: ["Around 10:30", "At 7:00", "At 12:30", "At dawn"], ans: 0 },
+        { q: "Which connector shows the first action of the day?", type: "mcq", opts: ["First", "Finally", "After that", "Because"], ans: 0 },
+        { q: "Which connector shows the last action before sleep?", type: "mcq", opts: ["Finally", "First", "Second", "Then"], ans: 0 },
+        { q: "Complete: 'Mom prepares meals _________ her family.'", type: "mcq", opts: ["for", "at", "on", "by"], ans: 0 },
+        { q: "What is the synonym (=) of 'house chores'?", type: "mcq", opts: ["household tasks", "games", "sports", "lessons"], ans: 0 },
+        { q: "What is the opposite (≠) of 'early'?", type: "mcq", opts: ["late", "fast", "soon", "morning"], ans: 0 },
+        { q: "A typical day means a:", type: "mcq", opts: ["Normal regular day", "Holiday day", "Camping trip", "Exam day"], ans: 0 },
+        { q: "Complete verb: 'She _________ (to clean) the house.'", type: "mcq", opts: ["cleans", "clean", "cleaning", "is clean"], ans: 0 }
+      ],
+
+      // 8. WRITE ALONE
+      8: [
+        { q: "Tina's father is a bus driver.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Tina's father prepares the bus for tourists.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "At the end of the day, he checks his bus.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "He drinks coffee with his friend after work.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "He returns home tired but happy.", type: "tf", opts: ["True", "False"], ans: 0 },
+        { q: "Tina's father sleeps in the bus all day.", type: "tf", opts: ["True", "False"], ans: 1 },
+        { q: "What is Tina's father's profession?", type: "mcq", opts: ["A bus driver", "A teacher", "A doctor", "A mechanic"], ans: 0 },
+        { q: "When does Tina's father get up?", type: "mcq", opts: ["Early in the morning", "At noon", "At midnight", "In afternoon"], ans: 0 },
+        { q: "Who does he prepare the bus for?", type: "mcq", opts: ["For students to go to school", "For football players", "For doctors", "For friends"], ans: 0 },
+        { q: "What does he do at the end of the day?", type: "mcq", opts: ["Checks his bus and goes shopping", "Plays tennis", "Swims", "Paints"], ans: 0 },
+        { q: "Who does he have coffee with?", type: "mcq", opts: ["With his friend", "With his boss", "With his cat", "Alone"], ans: 0 },
+        { q: "How does he feel when returning home?", type: "mcq", opts: ["Tired but happy", "Angry and sad", "Sick", "Bored"], ans: 0 },
+        { q: "Which verb fits: 'He _________ (to check) his bus.'", type: "mcq", opts: ["checks", "check", "checking", "checked"], ans: 0 },
+        { q: "Which verb fits: 'He _________ (to go) shopping.'", type: "mcq", opts: ["goes", "gos", "go", "going"], ans: 0 },
+        { q: "What is the synonym (=) of 'job'?", type: "mcq", opts: ["profession / occupation", "hobby", "sport", "game"], ans: 0 },
+        { q: "What is the opposite (≠) of 'happy'?", type: "mcq", opts: ["sad / unhappy", "tired", "busy", "fast"], ans: 0 },
+        { q: "What is the opposite (≠) of 'tired'?", type: "mcq", opts: ["energetic / fresh", "sleepy", "late", "hungry"], ans: 0 },
+        { q: "Connect sentences: 'He checks his bus _________ goes shopping.'", type: "mcq", opts: ["and", "but", "because", "or"], ans: 0 },
+        { q: "Complete: 'He returns home _________ the evening.'", type: "mcq", opts: ["in", "on", "at", "for"], ans: 0 },
+        { q: "Describing father's routines teaches us to:", type: "mcq", opts: ["Respect parents' hard work", "Dislike jobs", "Wake up late", "Avoid school"], ans: 0 }
+      ]
+    };
+
+    const stationNames = {
+      1: "Lesson 1: GET READY",
+      2: "Lesson 2: LISTEN AND INTERACT",
+      3: "Lesson 3: LISTEN AND CONSIDER",
+      4: "Lesson 4: I PRACTICE (Grammar)",
+      5: "Lesson 5: READ AND INTERPRET",
+      6: "Lesson 6: I PRACTICE (Sounds)",
+      7: "Lesson 7: WRITE TOGETHER",
+      8: "Lesson 8: WRITE ALONE"
+    };
+
+    // ==========================================
+    // محرك الأصوات الذكي
+    // ==========================================
+    let audioCtx = null;
+    function getAudioContext() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      return audioCtx;
+    }
+
+    function playSoundEffect(type) {
+      let audioFile = '';
+      if (type === 'correct') audioFile = 'audio/sfx/correct.mp3';
+      else if (type === 'wrong') audioFile = 'audio/sfx/wrong.mp3';
+      else if (type === 'victory') audioFile = 'audio/sfx/victory.mp3';
+
+      if (audioFile) {
+        const audio = new Audio(audioFile);
+        audio.play().catch(() => playSynthSfx(type));
+      } else {
+        playSynthSfx(type);
+      }
+    }
+
+    function playSynthSfx(type) {
+      try {
+        const ctx = getAudioContext();
+        if (type === 'correct') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+          osc.frequency.setValueAtTime(880, ctx.currentTime + 0.1);
+          gain.gain.setValueAtTime(0.15, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(); osc.stop(ctx.currentTime + 0.36);
+        } else if (type === 'wrong') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, ctx.currentTime);
+          osc.frequency.setValueAtTime(164.81, ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.15, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(); osc.stop(ctx.currentTime + 0.36);
+        } else if (type === 'victory') {
+          const notes = [523.25, 659.25, 783.99, 1046.50];
+          notes.forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + (i * 0.12));
+            gain.gain.setValueAtTime(0.15, ctx.currentTime + (i * 0.12));
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (i * 0.12) + 0.3);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + (i * 0.12));
+            osc.stop(ctx.currentTime + (i * 0.12) + 0.32);
+          });
+        }
+      } catch(e) {}
+    }
+
+    // ==========================================
+    // إدارة الأقسام
+    // ==========================================
+    function showSection(section) {
+      const wordsSec = document.getElementById('wordBankSection');
+      const pathwaySec = document.getElementById('pathwaySection');
+      const arenaSec = document.getElementById('stationArenaSection');
+      const aboutSec = document.getElementById('aboutSection');
+      
+      const btnWords = document.getElementById('btnNavWords');
+      const btnQuiz = document.getElementById('btnNavQuiz');
+      const btnAbout = document.getElementById('btnNavAbout');
+
+      wordsSec.style.display = 'none';
+      pathwaySec.style.display = 'none';
+      arenaSec.style.display = 'none';
+      aboutSec.style.display = 'none';
+
+      btnWords.classList.remove('active');
+      btnQuiz.classList.remove('active');
+      btnAbout.classList.remove('active');
+
+      if (section === 'words') {
+        wordsSec.style.display = 'block';
+        btnWords.classList.add('active');
+      } else if (section === 'quiz') {
+        pathwaySec.style.display = 'flex';
+        btnQuiz.classList.add('active');
+        updatePathwayStatsUI();
+      } else if (section === 'about') {
+        aboutSec.style.display = 'flex';
+        btnAbout.classList.add('active');
+      }
+    }
+
+    // ==========================================
+    // المحطات ونظام القلوب
+    // ==========================================
+    let currentStation = 1;
+    let stationQIdx = 0;
+    let stationScore = 0;
+    let arenaTimerInterval = null;
+    let arenaTimeLeft = 20;
+    let currentLives = 3;
+    let maxLives = 3;
+
+    function updatePathwayStatsUI() {
+      for (let i = 1; i <= 8; i++) {
+        const saved = localStorage.getItem(`edunexus_st_${i}`);
+        const el = document.getElementById(`statText${i}`);
+        if (saved !== null && el) {
+          el.innerHTML = `<span class="passed-text"><svg class="nav-icon" style="width:14px;height:14px;color:#10b981;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Passed (${saved}/20)</span>`;
+        }
+      }
+    }
+
+    function openStation(stationNum) {
+      currentStation = stationNum;
+      stationQIdx = 0;
+      stationScore = 0;
+
+      document.getElementById('pathwaySection').style.display = 'none';
+      document.getElementById('stationArenaSection').style.display = 'flex';
+
+      loadArenaQuestion();
+    }
+
+    function exitToPathway() {
+      if (arenaTimerInterval) clearInterval(arenaTimerInterval);
+      document.getElementById('stationArenaSection').style.display = 'none';
+      document.getElementById('pathwaySection').style.display = 'flex';
+      updatePathwayStatsUI();
+    }
+
+    function renderLivesUI() {
+      const box = document.getElementById('arenaLivesBox');
+      if (maxLives === 1) {
+        box.innerHTML = currentLives >= 1 ? '❤️' : '🤍';
+      } else {
+        let hearts = '';
+        for (let i = 0; i < maxLives; i++) {
+          hearts += i < currentLives ? '❤️' : '🤍';
+        }
+        box.innerHTML = hearts;
+      }
+    }
+
+    function loadArenaQuestion() {
+      const bank = lessonQuestionBanks[currentStation] || lessonQuestionBanks;
+      if (stationQIdx >= bank.length) {
+        finishStation(bank.length);
+        return;
+      }
+
+      const q = bank[stationQIdx];
+      if (q.type === 'tf') {
+        maxLives = 1;
+        currentLives = 1;
+      } else {
+        maxLives = 3;
+        currentLives = 3;
+      }
+      renderLivesUI();
+
+      document.getElementById('arenaTaskName').textContent = q.type === 'tf' ? 'TASK: TRUE OR FALSE' : 'PRACTICE TASK';
+      document.getElementById('arenaQIndex').textContent = `Q ${stationQIdx + 1}/${bank.length}`;
+      document.getElementById('arenaTrackFill').style.width = `${((stationQIdx + 1) / bank.length) * 100}%`;
+      document.getElementById('arenaQuestionText').textContent = q.q;
+
+      const optsContainer = document.getElementById('arenaOptionsList');
+      optsContainer.innerHTML = '';
+      document.getElementById('arenaNextBtn').style.display = 'none';
+
+      q.opts.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'arena-btn';
+        btn.innerHTML = `<span>${opt}</span><span class="radio-dot"></span>`;
+        btn.onclick = () => chooseArenaAnswer(idx, btn, q.ans, q.type);
+        optsContainer.appendChild(btn);
+      });
+
+      startArenaTimer();
+    }
+
+    function startArenaTimer() {
+      if (arenaTimerInterval) clearInterval(arenaTimerInterval);
+      arenaTimeLeft = 20;
+      document.getElementById('arenaTimer').textContent = `${arenaTimeLeft}s`;
+
+      arenaTimerInterval = setInterval(() => {
+        arenaTimeLeft--;
+        document.getElementById('arenaTimer').textContent = `${arenaTimeLeft}s`;
+        if (arenaTimeLeft <= 0) {
+          clearInterval(arenaTimerInterval);
+          handleTimeOut();
+        }
+      }, 1000);
+    }
+
+    function chooseArenaAnswer(selectedIdx, clickedBtn, correctIdx, qType) {
+      const allBtns = document.querySelectorAll('.arena-btn');
+
+      if (selectedIdx === correctIdx) {
+        if (arenaTimerInterval) clearInterval(arenaTimerInterval);
+        playSoundEffect('correct');
+        clickedBtn.classList.add('correct');
+        clickedBtn.querySelector('.radio-dot').textContent = '✔';
+        allBtns.forEach(b => b.disabled = true);
+
+        stationScore += 1;
+        addStarPoint();
+
+        document.getElementById('arenaNextBtn').style.display = 'block';
+      } else {
+        currentLives--;
+        renderLivesUI();
+        playSoundEffect('wrong');
+
+        clickedBtn.classList.add('wrong');
+        clickedBtn.querySelector('.radio-dot').textContent = '✖';
+        clickedBtn.disabled = true;
+
+        if (qType === 'tf' || currentLives <= 0) {
+          if (arenaTimerInterval) clearInterval(arenaTimerInterval);
+          allBtns.forEach(b => b.disabled = true);
+          if (allBtns[correctIdx]) {
+            allBtns[correctIdx].classList.add('correct');
+            allBtns[correctIdx].querySelector('.radio-dot').textContent = '✔';
+          }
+          document.getElementById('arenaNextBtn').style.display = 'block';
+        }
+      }
+    }
+
+    function handleTimeOut() {
+      const bank = lessonQuestionBanks[currentStation];
+      const correctIdx = bank[stationQIdx].ans;
+      const allBtns = document.querySelectorAll('.arena-btn');
+      allBtns.forEach(b => b.disabled = true);
+      currentLives = 0;
+      renderLivesUI();
+      playSoundEffect('wrong');
+
+      if (allBtns[correctIdx]) {
+        allBtns[correctIdx].classList.add('correct');
+        allBtns[correctIdx].querySelector('.radio-dot').textContent = '✔';
+      }
+      document.getElementById('arenaNextBtn').style.display = 'block';
+    }
+
+    function nextArenaQuestion() {
+      stationQIdx++;
+      loadArenaQuestion();
+    }
+
+    // ==========================================
+    // نافذة الاحتفال المخصصة
+    // ==========================================
+    function finishStation(totalQ) {
+      if (arenaTimerInterval) clearInterval(arenaTimerInterval);
+      const finalScore = stationScore;
+      localStorage.setItem(`edunexus_st_${currentStation}`, finalScore.toString());
+
+      const modal = document.getElementById('celebrationModal');
+      const icon = document.getElementById('celebrationIcon');
+      const title = document.getElementById('celebrationTitle');
+      const stationLabel = document.getElementById('celebrationStation');
+      const scoreVal = document.getElementById('celebrationScoreVal');
+      const msg = document.getElementById('celebrationMsg');
+      const nextBtn = document.getElementById('celebrationNextBtn');
+
+      stationLabel.textContent = stationNames[currentStation] || `Lesson ${currentStation}`;
+      scoreVal.textContent = finalScore;
+
+      if (finalScore >= 10) {
+        playSoundEffect('victory');
+        icon.textContent = '🏆';
+        title.textContent = 'Congratulations!';
+        msg.className = 'celebration-badge-msg passed';
+        msg.textContent = '🎉 Excellent Work! Station Passed & Next Station Unlocked!';
+        nextBtn.textContent = 'Continue to Pathway ➔';
+      } else {
+        icon.textContent = '📚';
+        title.textContent = 'Good Effort!';
+        msg.className = 'celebration-badge-msg failed';
+        msg.textContent = 'You need at least 10/20 to pass this station. Review the cards and try again!';
+        nextBtn.textContent = 'Return to Pathway';
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function onCelebrationContinue() {
+      document.getElementById('celebrationModal').style.display = 'none';
+      exitToPathway();
+    }
+
+    function onCelebrationRetry() {
+      document.getElementById('celebrationModal').style.display = 'none';
+      openStation(currentStation);
+    }
+
+    // ==========================================
+    // Word Bank
+    // ==========================================
+    let currentCategory = 'all';
+    let areImagesVisible = true;
+    let currentActiveAudio = null;
+    let currentActiveBtn = null;
+
+    function renderWords(wordsToRender) {
+      const grid = document.getElementById('vocabGrid');
+      grid.innerHTML = '';
+      document.getElementById('totalCount').textContent = fullVocabData.length;
+
+      if (wordsToRender.length === 0) {
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-muted); font-weight:700;">No words found matching your search.</div>';
+        return;
+      }
+
+      wordsToRender.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'word-card';
+        card.innerHTML = `
+          <div class="card-banner" style="display: ${areImagesVisible ? 'block' : 'none'}">
+            <img 
+              src="images/vocab/${item.baseName}.jpg" 
+              alt="${item.word}" 
+              loading="lazy"
+              data-try-step="0"
+              onerror="handleImageError(this, '${escapeQuotes(item.baseName)}')"
+            >
+            <span class="banner-badge">${item.tag}</span>
+          </div>
+
+          <div class="card-content">
+            <div class="card-top">
+              <div class="term-wrapper">
+                <span class="term-text">${item.word}</span>
+                <span class="term-pos">${item.pos}</span>
+              </div>
+              <button class="audio-action-btn" onclick="playAudio('${item.audio}', '${escapeQuotes(item.word)}', this)" title="Pronounce word">
+                <svg class="nav-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              </button>
+            </div>
+            <div class="arabic-meaning">
+              ${item.ar}
+            </div>
+            <div class="example-box">
+              <div class="example-header">
+                <span>Example in Context</span>
+                <button class="play-sentence-btn" onclick="playAudio('', '${escapeQuotes(item.sentence)}', this)" title="Listen to sentence">
+                  <svg class="nav-icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
+              </div>
+              <div class="example-text">${highlightKeyword(item.sentence, item.word)}</div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function handleImageError(imgEl, baseName) {
+      const step = parseInt(imgEl.dataset.tryStep || "0", 10);
+      const spaceName = baseName;
+      const underscoreName = baseName.replace(/\s+/g, '_');
+
+      const candidates = [
+        `images/vocab/${spaceName}.jpg`,
+        `images/vocab/${underscoreName}.jpg`,
+        `images/vocab/${spaceName}.png`,
+        `images/vocab/${underscoreName}.png`,
+        `images/vocab/${spaceName}.jpeg`,
+        `images/vocab/${underscoreName}.jpeg`,
+        `images/vocab/${spaceName}.webp`,
+        `images/vocab/${underscoreName}.webp`
+      ];
+
+      if (step < candidates.length) {
+        imgEl.dataset.tryStep = (step + 1).toString();
+        imgEl.src = candidates[step];
+      } else {
+        imgEl.onerror = null;
+        imgEl.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="150" viewBox="0 0 300 150"><rect fill="%23f1f5f9" width="300" height="150"/><text fill="%2394a3b8" font-family="sans-serif" font-weight="bold" font-size="13" x="50%" y="50%" text-anchor="middle">🖼️ Flashcard Image</text></svg>';
+      }
+    }
+
+    function toggleImagesDisplay() {
+      areImagesVisible = !areImagesVisible;
+      const toggleBtn = document.getElementById('toggleImagesBtn');
+      const label = document.getElementById('toggleImagesLabel');
+      const banners = document.querySelectorAll('.card-banner');
+
+      banners.forEach(banner => {
+        banner.style.display = areImagesVisible ? 'block' : 'none';
+      });
+
+      if (areImagesVisible) {
+        label.textContent = "Hide Images";
+        toggleBtn.classList.remove('active');
+      } else {
+        label.textContent = "Show Images";
+        toggleBtn.classList.add('active');
+      }
+    }
+
+    function escapeQuotes(str) { return str.replace(/'/g, "\\'"); }
+
+    function highlightKeyword(sentence, word) {
+      const firstWord = word.split(' ')[0].replace(/[^a-zA-Z]/g, '');
+      const regex = new RegExp(`(${firstWord})`, 'gi');
+      return sentence.replace(regex, '<span style="text-decoration: underline; font-weight: 800; color: var(--primary-color);">$1</span>');
+    }
+
+    function setCategory(cat, tabElement) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      tabElement.classList.add('active');
+      filterWords();
+    }
+
+    function filterWords() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const filtered = fullVocabData.filter(item => {
+        const matchesCategory = (currentCategory === 'all' || item.cat === currentCategory);
+        const matchesQuery = item.word.toLowerCase().includes(query) || item.ar.includes(query);
+        return matchesCategory && matchesQuery;
+      });
+      renderWords(filtered);
+    }
+
+    // ==========================================
+    // النجوم والصوتيات والثيمات
+    // ==========================================
+    let learnedWordsCount = parseInt(localStorage.getItem('edunexus_stars') || '0', 10);
+
+    function addStarPoint() {
+      learnedWordsCount++;
+      localStorage.setItem('edunexus_stars', learnedWordsCount.toString());
+      const counterEl = document.getElementById('starCounter');
+      const starBtn = document.getElementById('starPillBtn');
+      counterEl.textContent = learnedWordsCount;
+      starBtn.classList.remove('star-pop');
+      void starBtn.offsetWidth;
+      starBtn.classList.add('star-pop');
+    }
+
+    function playAudio(audioFilePath, textFallback, btnElement) {
+      addStarPoint();
+
+      if (currentActiveAudio) {
+        currentActiveAudio.pause();
+        currentActiveAudio.currentTime = 0;
+      }
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      if (currentActiveBtn) {
+        currentActiveBtn.classList.remove('playing');
+      }
+
+      btnElement.classList.add('playing');
+      currentActiveBtn = btnElement;
+
+      if (audioFilePath) {
+        const audio = new Audio(audioFilePath);
+        currentActiveAudio = audio;
+        audio.play().then(() => {
+          audio.onended = () => btnElement.classList.remove('playing');
+        }).catch(() => {
+          speakFallback(textFallback, btnElement);
+        });
+      } else {
+        speakFallback(textFallback, btnElement);
+      }
+    }
+
+    function speakFallback(text, btnElement) {
+      if (!('speechSynthesis' in window)) {
+        btnElement.classList.remove('playing');
+        return;
+      }
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.pitch = 1.0;
+      utterance.rate = 0.88;
+      utterance.onend = () => btnElement.classList.remove('playing');
+      utterance.onerror = () => btnElement.classList.remove('playing');
+      window.speechSynthesis.speak(utterance);
+    }
+
+    const BG_MUSIC_SOURCE = 'audio/bg-music/bg-music.mp3';
+    let bgAudio = new Audio(BG_MUSIC_SOURCE);
+    bgAudio.loop = true;
+    bgAudio.volume = 0.28;
+    let bgMusicPlaying = false;
+
+    function toggleBackgroundMusic() {
+      const musicBtn = document.getElementById('musicToggleBtn');
+      const label = document.getElementById('musicBtnLabel');
+      if (!bgMusicPlaying) {
+        bgAudio.play().then(() => {
+          bgMusicPlaying = true;
+          musicBtn.classList.add('playing-music');
+          label.textContent = 'Pause Music';
+        }).catch(err => {
+          alert("تأكد من وجود ملف الموسيقى في المسار:\naudio/bg-music/bg-music.mp3");
+        });
+      } else {
+        bgAudio.pause();
+        bgMusicPlaying = false;
+        musicBtn.classList.remove('playing-music');
+        label.textContent = 'Music';
+      }
+    }
+
+    const colorPalettes = [
+      { name: "Sky Blue", bg: "linear-gradient(135deg, #f0f9ff 0%, #f8fafc 100%)", primary: "#0284c7", soft: "#e0f2fe", btn: "#2563eb" },
+      { name: "Forest Green", bg: "linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%)", primary: "#059669", soft: "#d1fae5", btn: "#10b981" },
+      { name: "Warm Amber", bg: "linear-gradient(135deg, #fef3c7 0%, #fff7ed 100%)", primary: "#ea580c", soft: "#ffedd5", btn: "#f97316" },
+      { name: "Purple Magic", bg: "linear-gradient(135deg, #f3e8ff 0%, #fdf4ff 100%)", primary: "#9333ea", soft: "#f3e8ff", btn: "#a855f7" }
+    ];
+    let currentThemeIdx = 0;
+
+    function applyThemePalette(idx) {
+      const palette = colorPalettes[idx];
+      const root = document.documentElement;
+      root.style.setProperty('--primary-color', palette.primary);
+      root.style.setProperty('--primary-soft', palette.soft);
+      root.style.setProperty('--btn-color', palette.btn);
+      if (!document.body.classList.contains('dark-mode')) {
+        root.style.setProperty('--bg-gradient', palette.bg);
+      }
+      document.getElementById('themeNameLabel').textContent = palette.name;
+    }
+
+    function cycleThemeColor() {
+      currentThemeIdx = (currentThemeIdx + 1) % colorPalettes.length;
+      applyThemePalette(currentThemeIdx);
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const iconWrapper = document.getElementById('darkIconWrapper');
+      if (document.body.classList.contains('dark-mode')) {
+        iconWrapper.innerHTML = `<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>`;
+      } else {
+        iconWrapper.innerHTML = `<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+        document.documentElement.style.setProperty('--bg-gradient', colorPalettes[currentThemeIdx].bg);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('starCounter').textContent = learnedWordsCount;
+      applyThemePalette(0);
+      renderWords(fullVocabData);
+    });
+
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+        setTimeout(() => {
+          preloader.classList.add('hidden');
+          setTimeout(() => preloader.remove(), 450);
+        }, 300);
+      }
+    });
+  </script>
+</body>
+</html>
